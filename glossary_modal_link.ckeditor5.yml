@@ -1,0 +1,40 @@
+glossary_modal_link_glossary:
+  # Use the provider: property for this plugin to depend on another module.
+
+  # Configuration that will be sent to CKEditor 5 JavaScript plugins.
+  ckeditor5:
+    plugins:
+      - glossary.Glossary
+    # *Additional configuration properties*
+    # config: data sent to the constructor of any CKEditor 5 plugin
+    #   editorPluginName:
+    #     editorPluginProperty: editorPluginValue
+
+  # Configuration that will be used directly by Drupal.
+  drupal:
+    label: Glossary Modal Link
+    # The library loaded while using the editor.
+    library: glossary_modal_link/glossary
+    # The library loaded when configuring the text format using this plugin.
+    admin_library: glossary_modal_link/admin.glossary
+    toolbar_items:
+      # This should match the name of the corresponding plugin exported in the
+      # plugin's index.js.
+      glossary:
+        label: Glossary
+    # If the plugin does not provide elements, set this as
+    # `elements: false`
+    elements:
+      # Note that it necessary for elements to separately provide both the tag
+      # (f.e. `<h2>`) and the attribute being added to the tag
+      # (f.e. `<h2 class="simple-box-title">`).
+      - <abbr>
+      - <a>
+      - <a href>
+      - <a data-entity-type data-entity-uuid data-entity-substitution>
+      - <data-glossary>
+      - <data-glossary data-glossary-id data-glossary-type class>
+      - <glossary-link>
+      - <glossary-link data-glossary-id data-glossary-type>
+      - <span>
+      - <span data-glossary-id data-glossary-type>

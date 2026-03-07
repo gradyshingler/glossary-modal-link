@@ -1,0 +1,16 @@
+glossary_modal_link.entity_modal:
+  path: '/glossary/modal/{entity_type}/{entity}/{view_mode}'
+  defaults:
+    _controller: '\Drupal\glossary_modal_link\Controller\GlossaryModalController::entityViewModeRetrieval'
+    _title_callback: '\Drupal\glossary_modal_link\Controller\GlossaryModalController::title'
+    view_mode: 'default'
+#  requirements:
+#    _entity_access: 'entity.view'
+  options:
+    parameters:
+      entity_type:
+        type: string
+      entity:
+        type: entity:{entity_type}
+      view_mode:
+        type: string

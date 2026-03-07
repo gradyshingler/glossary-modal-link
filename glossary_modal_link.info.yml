@@ -1,0 +1,7 @@
+name: Glossary modal links
+type: module
+description: Rewrites Linkit glossary term links to open in a Drupal core AJAX modal.
+core_version_requirement: ^11
+package: Custom
+dependencies:
+  - drupal:filter

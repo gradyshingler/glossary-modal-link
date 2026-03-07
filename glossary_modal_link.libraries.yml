@@ -1,0 +1,33 @@
+glossary:
+  js:
+    js/build/glossary.js: { preprocess: false, minified: true }
+    js/linkit.autocomplete.js: {}
+    js/glossary_modal_link.js: {}
+    js/jquery.once.js: {}
+  css:
+    css/linkit.autocomplete.css: {}
+  dependencies:
+    - core/ckeditor5
+    - linkit/linkit.base
+    - core/drupal.ajax
+    - core/drupal.autocomplete
+    - core/once
+    - core/jquery
+    - core/drupal.autocomplete
+
+# Loaded in the text format configuration form to provide styling for the icon
+# used in toolbar config.
+admin.glossary:
+  css:
+    theme:
+      css/glossary_modal_link.admin.css: { }
+
+glossary.glossary_button:
+  css:
+    theme:
+      css/glossary.button.css: {}
+
+ckeditor_styles:
+  css:
+    theme:
+      css/glossary.button.css: {}

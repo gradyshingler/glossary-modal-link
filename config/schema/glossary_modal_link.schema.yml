@@ -1,0 +1,20 @@
+# Plugin \Drupal\glossary_modal_link\Plugin\Filter\GlossaryModalLinks
+filter_settings.glossary_modal_links:
+  type: filter
+  label: 'Glossary Modal Links'
+  mapping:
+    bootstrap_version:
+      type: string
+      label: 'Bootstrap version'
+    icon_class:
+      type: string
+      label: 'Font Awesome icon class'
+    icon_enabled:
+      type: boolean
+      label: 'Enable Font Awesome icon'
+    additional_classes:
+      type: string
+      label: 'Additional classes'
+    view_mode:
+      type: string
+      label: 'View mode'

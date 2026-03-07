@@ -1,0 +1,24 @@
+Glossary Modal Link
+
+Main Features:
+- Glossary Plugin can be added to Text Filters
+
+Requirements:
+- Linkit Module
+- Create a Matcher that is used.
+  * currently requires a glossary_profile machine name
+
+CKEditor Plugin:
+- CKEditor Plugin is available in /js/ckeditor5_plugins folder.
+- Changes to this file needs to be built using [TODO]
+
+ Development Notes:
+ - The CKEditor plugin's main use is to create an easy way to add a title and entity pointer to the content in the matcher. (Currently only nodes supported)
+ - The Filter in the Text Editor is used to convert the <span> created by the CKeditor plugin and convert it into a boostrap based link
+    * The filter has multiple fields available to customize the output and configure as needed.
+ - The bootstrap modal HTML is injected into the page using the hook_page_bottom
+ - The desired modal content is injected into the bootstrap modal using js from an ajax get request and attached to the button onclick event. The route is: /glossary/modal/{entity_type}/{entity}/{view_mode}
+    * This page can be accessed individually to see what content is shown.
+
+
+

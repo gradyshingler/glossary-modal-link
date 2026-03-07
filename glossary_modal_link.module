@@ -1,0 +1,79 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_theme_suggestions_taxonomy_term_alter().
+ */
+function glossary_modal_link_theme_suggestions_taxonomy_term_alter(array &$suggestions, array $variables): void {
+  // Ensure 'term' exists and is a taxonomy term object.
+  $term = $variables['elements']['#taxonomy_term'];
+
+  // Only for the Glossary vocabulary + glossary_modal view mode.
+  if ($term->bundle() === 'glossary' && ($variables['view_mode'] ?? '') === 'glossary_modal') {
+    // Produces suggestion: taxonomy_term__glossary__glossary_modal
+    $suggestions[] = 'taxonomy_term__glossary__glossary_modal';
+  }
+
+  if (!empty($variables['elements']['#view_mode'])) {
+    $view_mode = $variables['elements']['#view_mode'];
+    $suggestions[] = 'taxonomy_term__' . $term->bundle(). '__' . $view_mode;
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function glossary_modal_link_theme($existing, $type, $theme, $path): array {
+  return [
+    'taxonomy_term__glossary__glossary_modal' => [
+      'base hook' => 'taxonomy_term',
+      'template' => 'taxonomy-term--glossary--glossary-modal',
+      'path' => $path . '/templates',
+    ],
+    'glossary_modal_block' => [
+      'variables' => [],
+      'template' => 'glossary-modal-block',
+      'path' => $path . '/templates',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function glossary_modal_link_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'glossary_modal_link/glossary.glossary_button';
+}
+
+/**
+ * Implements hook_page_bottom().
+ */
+function glossary_modal_link_page_bottom(array &$page_bottom) {
+  // Only show the modal on non-admin pages.
+  $is_admin_route = \Drupal::service('router.admin_context')->isAdminRoute();
+  $current_route_name = \Drupal::routeMatch()->getRouteName();
+  $is_user_page = str_starts_with($current_route_name, 'user.');
+
+  if (!$is_admin_route && !$is_user_page) {
+    $block_manager = \Drupal::service('plugin.manager.block');
+    $config = [];
+    $plugin_block = $block_manager->createInstance('glossary_modal_block', $config);
+    $page_bottom['glossary_modal'] = $plugin_block->build();
+    $page_bottom['glossary_modal']['#attached']['library'][] = 'glossary_modal_link/glossary.modal';
+  }
+}
+
+
+/**
+ * Implements hook_editor_js_settings_alter().
+ */
+function glossary_modal_link_editor_js_settings_alter(array &$settings) {
+  foreach ($settings['editor']['formats'] as &$format) {
+    if (!empty($format['editorSettings']['ckeditor5'])) {
+      // Attach the custom CSS file directly using stylesheets[].
+      $format['editorSettings']['ckeditor5']['config']['stylesheets'][] = base_path() . \Drupal::service('extension.path.resolver')->getPath('module', 'glossary_modal_link') . '/css/glossary.button.css';
+    }
+  }
+}
+
