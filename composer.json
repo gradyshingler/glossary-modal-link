@@ -1,0 +1,9 @@
+{
+  "name": "yourcompany/my_module",
+  "description": "Shared Drupal module",
+  "type": "drupal-module",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^11"
+  }
+}
