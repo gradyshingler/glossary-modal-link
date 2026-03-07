@@ -1,6 +1,6 @@
 {
-  "name": "yourcompany/my_module",
-  "description": "Shared Drupal module",
+  "name": "gradyshingler/glossary-modal-link",
+  "description": "Provides glossary modal link functionality.",
   "type": "drupal-module",
   "license": "GPL-2.0-or-later",
   "require": {
