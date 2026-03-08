@@ -40,6 +40,13 @@ function glossary_modal_link_theme($existing, $type, $theme, $path): array {
 }
 
 /**
+ * Implements hook_page_attachments().
+ */
+function glossary_modal_link_page_attachments(array &$attachments) {
+    $attachments['#attached']['library'][] = 'glossary_modal_link/glossary.glossary_button';
+}
+
+/**
  * Implements hook_page_bottom().
  */
 function glossary_modal_link_page_bottom(array &$page_bottom) {
