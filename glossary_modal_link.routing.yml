@@ -4,8 +4,8 @@ glossary_modal_link.entity_modal:
     _controller: '\Drupal\glossary_modal_link\Controller\GlossaryModalController::entityViewModeRetrieval'
     _title_callback: '\Drupal\glossary_modal_link\Controller\GlossaryModalController::title'
     view_mode: 'default'
-#  requirements:
-#    _entity_access: 'entity.view'
+  requirements:
+    _access: 'TRUE'
   options:
     parameters:
       entity_type:

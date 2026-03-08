@@ -15,13 +15,13 @@ use Drupal\Core\Block\BlockBase;
  */
 class GlossaryModalBlock extends BlockBase {
 
-  /**
-   * {@inheritdoc}
-   */
-  public function build() {
-    return [
-      '#theme' => 'glossary_modal_block',
-    ];
-  }
+    /**
+     * {@inheritdoc}
+     */
+    public function build() {
+        return [
+            '#theme' => 'glossary_modal_block',
+        ];
+    }
 
 }
