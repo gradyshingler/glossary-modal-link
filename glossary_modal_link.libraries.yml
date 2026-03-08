@@ -22,12 +22,9 @@ admin.glossary:
     theme:
       css/glossary_modal_link.admin.css: { }
 
+# CKEditor 5 styles
 glossary.glossary_button:
   css:
     theme:
       css/glossary.button.css: {}
 
-ckeditor_styles:
-  css:
-    theme:
-      css/glossary.button.css: {}

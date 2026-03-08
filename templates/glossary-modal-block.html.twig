@@ -1,17 +1,22 @@
 <!-- Modal -->
-<div class="modal fade" id="glossaryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+<!-- This is the default Modal layout -->
+{#This can be modified by adding a [TODO] Add the details Here#}
+{#TODO: Find a way add the data-dismiss to either be bootstrap 4 or 5 to updat ethe data-dismiss vs. data-bs-dismiss#}
+
+<div class="modal modal-glossary fade" id="glossaryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-sm">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="glossaryModalTitle">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn btn-icon" data-dismiss="modal" data-bs-dismiss="modal" aria-label="Close">
+          <i class="fas fa-times"></i>
+        </button>
       </div>
       <div class="modal-body">
         ...
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <a id="action-button" type="button" class="action-button btn btn-primary">Save changes</a>
+        <a id="action-button" type="button" target="_blank" class="action-button btn btn-crimson">View Glossary</a>
       </div>
     </div>
   </div>

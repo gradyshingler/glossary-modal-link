@@ -113,26 +113,26 @@
   word-break: normal;
 }
 
-.glossary-btn {
-  display: inline-block;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #fff;
-  background-color: #007bff;
-  border: 1px solid #007bff;
-  border-radius: 0.25rem;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-}
+/*.glossary-btn {*/
+/*  display: inline-block;*/
+/*  padding: 0.375rem 0.75rem;*/
+/*  font-size: 1rem;*/
+/*  font-weight: 400;*/
+/*  line-height: 1.5;*/
+/*  color: #fff;*/
+/*  background-color: #007bff;*/
+/*  border: 1px solid #007bff;*/
+/*  border-radius: 0.25rem;*/
+/*  text-align: center;*/
+/*  vertical-align: middle;*/
+/*  cursor: pointer;*/
+/*  user-select: none;*/
+/*  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;*/
+/*}*/
 
-.glossary-btn:hover, .glossary-btn:focus {
-  background-color: #0056b3;
-  border-color: #0056b3;
-  color: #fff;
-  text-decoration: none;
-}
+/*.glossary-btn:hover, .glossary-btn:focus {*/
+/*  background-color: #0056b3;*/
+/*  border-color: #0056b3;*/
+/*  color: #fff;*/
+/*  text-decoration: none;*/
+/*}*/

@@ -40,13 +40,6 @@ function glossary_modal_link_theme($existing, $type, $theme, $path): array {
 }
 
 /**
- * Implements hook_page_attachments().
- */
-function glossary_modal_link_page_attachments(array &$attachments) {
-  $attachments['#attached']['library'][] = 'glossary_modal_link/glossary.glossary_button';
-}
-
-/**
  * Implements hook_page_bottom().
  */
 function glossary_modal_link_page_bottom(array &$page_bottom) {
@@ -60,7 +53,6 @@ function glossary_modal_link_page_bottom(array &$page_bottom) {
     $config = [];
     $plugin_block = $block_manager->createInstance('glossary_modal_block', $config);
     $page_bottom['glossary_modal'] = $plugin_block->build();
-    $page_bottom['glossary_modal']['#attached']['library'][] = 'glossary_modal_link/glossary.modal';
   }
 }
 
