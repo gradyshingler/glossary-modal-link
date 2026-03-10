@@ -20,5 +20,18 @@ CKEditor Plugin:
  - The desired modal content is injected into the bootstrap modal using js from an ajax get request and attached to the button onclick event. The route is: /glossary/modal/{entity_type}/{entity}/{view_mode}
     * This page can be accessed individually to see what content is shown.
 
+Add the following to composer to look at the public git repo:
+{
+    "name": "glossary-modal-link",
+    "type": "vcs",
+    "url": "https://github.com/gradyshingler/glossary-modal-link.git"
+},
 
-
+Add the following to composer to look at the private git repo:
+{
+    "type": "path",
+    "url": "../dvinci-contrib/glossary_modal_link",
+    "options": {
+        "symlink": true
+    }
+},

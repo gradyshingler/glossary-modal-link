@@ -17,4 +17,7 @@ filter_settings.glossary_modal_links:
       label: 'Additional classes'
     view_mode:
       type: string
-      label: 'View mode'
+      label: 'Modal View mode'
+    button_view_mode:
+      type: string
+      label: 'Button View mode'

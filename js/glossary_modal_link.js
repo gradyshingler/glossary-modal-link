@@ -9,6 +9,10 @@
                     // let targetModal = $(this).data('bs-target');
                     let targetModal = $(this).data('target');
 
+                    if(!targetModal) {
+                        targetModal = $(this).data('bs-target');
+                    }
+
                     console.log("targetModal: ", targetModal);
 
                     let title = $(this).data('modal-title');
@@ -25,6 +29,7 @@
                     console.log("url: ", url);
 
                     let modal = $(targetModal);
+                    console.log("modal: ", modal);
 
                     // Load the spinner to show until the content is loaded
                     modal.find('.modal-body').html('<div class="text-center p-4"><span class="spinner-border"></span></div>');
@@ -40,6 +45,8 @@
                         modal.find('.modal-dialog').removeClass('modal-xs modal-sm modal-md modal-lg modal-xl').addClass('modal-' + modalSize);
                     }
                     if(buttonLink) {
+                        console.log("Setting button link");
+                        console.log("action-button", modal.find('.action-button'))
                         modal.find('.action-button').html(buttonLabel);
                         modal.find('.action-button').attr('href', buttonLink);
                         // Set the disabled status
