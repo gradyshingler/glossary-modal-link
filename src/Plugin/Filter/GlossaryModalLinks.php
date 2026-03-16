@@ -127,13 +127,13 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
 
         $dom = Html::load($text);
         $xpath = new \DOMXPath($dom);
-        $storage = $this->entityTypeManager->getStorage('taxonomy_term');
 
         // Find all <span> elements with data-glossary-id attribute.
         $nodes = $xpath->query('//span[@data-glossary-id]');
 
         /** @var \DOMElement $el */
         foreach ($nodes as $el) {
+
             $glossary_id = $el->getAttribute('data-glossary-id');
             $glossary_uuid = $el->getAttribute('data-glossary-uuid');
             $button_display_text = $el->getAttribute('data-glossary-display-text');
@@ -196,8 +196,15 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
 
             $rendered_node = \Drupal::service('renderer')->renderRoot($button);
 
+            // Normalize rendered markup so DOM parsing doesn't introduce stray
+            // whitespace/text nodes from newlines.
+            $rendered_node_string = (string) $rendered_node;
+            $rendered_node_string = str_replace(["\r\n", "\n", "\r"], '', $rendered_node_string);
+            // Collapse any remaining runs of whitespace between tags.
+            $rendered_node_string = preg_replace('/>\s+</', '><', $rendered_node_string) ?? $rendered_node_string;
+
             // Create a new DOMDocument to parse the rendered node string.
-            $temp_doc = Html::load((string) $rendered_node);
+            $temp_doc = Html::load($rendered_node_string);
             $body_node = $temp_doc->getElementsByTagName('body')->item(0);
             foreach ($body_node->childNodes as $child_node) {
                 $imported_node = $dom->importNode($child_node, TRUE);

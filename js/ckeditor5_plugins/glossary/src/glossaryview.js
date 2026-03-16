@@ -48,7 +48,7 @@ export default class FormView extends View {
 
 
     this.titleInputView = this._createInput( 'Add Link Title' );
-    this.entitySearchInputView = this._createInput( 'Search Glossary Term' );
+    this.entitySearchInputView = this._createInput( 'Search Term' );
 
     this.saveButtonView = this._createButton( 'Save', IconCheck, 'ck-button-save' );
     this.saveButtonView.type = 'submit';

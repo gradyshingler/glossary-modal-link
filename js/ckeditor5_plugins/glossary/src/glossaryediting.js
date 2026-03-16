@@ -55,7 +55,8 @@ export default class Glossaryediting extends Plugin {
       model: 'glossary',
       view: (modelElement, { writer: viewWriter }) => {
         const widgetElement = this._createGlossaryView(modelElement, viewWriter);
-        return toWidget(widgetElement, viewWriter, { label: 'glossary button widget' });
+        // Use isInline: true to prevent CKEditor from adding &nbsp; around the widget
+        return toWidget(widgetElement, viewWriter, { label: 'glossary button widget', isInline: true });
       },
     });
 
@@ -90,23 +91,23 @@ export default class Glossaryediting extends Plugin {
   }
 
   _createGlossaryView(modelElement, viewWriter) {
-    const displayText = modelElement.getAttribute('glossaryDisplayText') || modelElement.getAttribute('glossaryLabel') || '';
+    let displayText = modelElement.getAttribute('glossaryDisplayText') || modelElement.getAttribute('glossaryLabel') || '';
+    // Sanitize displayText: remove leading/trailing spaces and &nbsp;
+    displayText = displayText.replace(/^(&nbsp;|\s)+|(&nbsp;|\s)+$/g, '');
 
-    const glossaryView = viewWriter.createContainerElement(
-        'span',
-        {
-          class: 'glossary-btn btn btn-primary',
-          'data-glossary-id': modelElement.getAttribute('glossaryId'),
-          'data-glossary-uuid': modelElement.getAttribute('glossaryUuid'),
-          'data-glossary-type': modelElement.getAttribute('glossaryType'),
-          'data-glossary-path': modelElement.getAttribute('glossaryPath'),
-          'data-glossary-substitution-id': modelElement.getAttribute('glossarySubstitutionId'),
-          'data-glossary-label': modelElement.getAttribute('glossaryLabel'),
-          'data-glossary-display-text': displayText,
-        },
-        viewWriter.createText(displayText),
+    return viewWriter.createContainerElement(
+      'span',
+      {
+        class: 'glossary-btn btn btn-primary',
+        'data-glossary-id': modelElement.getAttribute('glossaryId'),
+        'data-glossary-uuid': modelElement.getAttribute('glossaryUuid'),
+        'data-glossary-type': modelElement.getAttribute('glossaryType'),
+        'data-glossary-path': modelElement.getAttribute('glossaryPath'),
+        'data-glossary-substitution-id': modelElement.getAttribute('glossarySubstitutionId'),
+        'data-glossary-label': modelElement.getAttribute('glossaryLabel'),
+        'data-glossary-display-text': displayText,
+      },
+      viewWriter.createText(displayText),
     );
-
-    return glossaryView;
   }
 }
