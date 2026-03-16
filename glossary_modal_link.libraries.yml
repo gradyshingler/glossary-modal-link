@@ -27,4 +27,5 @@ glossary.glossary_button:
   css:
     theme:
       css/glossary.button.css: {}
+      css/glossary.modal.css: {}
 

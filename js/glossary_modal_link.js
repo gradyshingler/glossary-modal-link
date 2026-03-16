@@ -2,6 +2,7 @@
 
     Drupal.behaviors.glossaryModalLink = {
         attach: function (context, settings) {
+            console.log("Glossary Modal Link Function");
             $('.glossary-modal-link', context).once('glossary-modal-trigger')
                 .on('click', function (e) {
                     e.preventDefault();

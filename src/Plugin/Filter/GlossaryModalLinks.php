@@ -88,10 +88,10 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
 //            '#default_value' => $this->settings['additional_classes'] ?? '',
 //            '#description' => $this->t('Enter any additional classes to add to the link, separated by spaces.'),
 //        ];
-        $form['view_mode'] = [
+        $form['modal_view_mode'] = [
             '#type' => 'textfield',
             '#title' => $this->t('Modal View mode'),
-            '#default_value' => $this->settings['view_mode'] ?? 'glossary_modal',
+            '#default_value' => $this->settings['modal_view_mode'] ?? 'glossary_modal',
             '#description' => $this->t('Enter the machine name of the view mode to use for the modal content. It is up to the site builder to ensure the view mode makes sense in a modal.'),
         ];
         $form['button_view_mode'] = [
@@ -110,12 +110,12 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
 //        $icon_enabled = !empty($this->settings['icon_enabled']);
 //        $icon_class = $this->settings['icon_class'] ?? 'fas fa-external-link-alt';
 //        $additional_classes = $this->settings['additional_classes'] ?? '';
-        $modal_view_mode = $this->settings['view_mode'] ?? 'glossary_modal';
+        $modal_view_mode = $this->settings['modal_view_mode'] ?? 'glossary_modal';
         $button_view_mode = $this->settings['button_view_mode'] ?? 'inline_reference_link';
 //        $summary[] = $this->t('Font Awesome icon: @enabled', ['@enabled' => $icon_enabled ? 'Enabled' : 'Disabled']);
 //        $summary[] = $this->t('Font Awesome icon class: <code>@icon</code>', ['@icon' => $icon_class]);
 //        $summary[] = $this->t('Additional classes: <code>@classes</code>', ['@classes' => $additional_classes]);
-        $summary[] = $this->t('View mode: @view_mode', ['@view_mode' => $view_mode]);
+        $summary[] = $this->t('View mode: @view_mode', ['@view_mode' => $modal_view_mode]);
         return $summary;
     }
 
@@ -152,6 +152,7 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
 
             // Get button view mode from settings, fallback to 'inline_reference_link'.
             $button_view_mode = $this->settings['button_view_mode'] ?? 'inline_reference_link';
+            $modal_view_mode = $this->settings['modal_view_mode'] ?? 'inline_reference_link';
 
             // Create <a> element to replace <span>.
             $view_builder = \Drupal::entityTypeManager()->getViewBuilder($entity_type);
@@ -160,6 +161,36 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
                 $content['#button_display_text'] = $button_display_text;
             }
             $rendered_node = \Drupal::service('renderer')->renderRoot($content);
+
+            // Build attributes for the button.
+            $attributes = [
+                'class' => ['glossary-modal-link', 'btn', 'btn-light', 'btn-sm', 'py-0', 'mx-0'],
+                'data-bs-target' => '#glossaryModal',
+                'data-bs-toggle' => 'modal',
+                'data-ajax-url' => $this->urlGenerator->generateFromRoute('glossary_modal_link.entity_modal', [
+                    'entity_type' => $entity_type,
+                    'entity' => $entity->id(),
+                    'view_mode' => $modal_view_mode,
+                ]),
+                'data-node-view' => 'modal',
+                'data-modal-size' => 'xl',
+                'data-modal-title' => $entity->label(),
+                'data-button-label' => $button_display_text,
+                'data-disabled-status' => 'false',
+                'data-button-link' => $entity->toUrl()->toString(),
+                'data-node-id' => $entity->id(),
+            ];
+
+            // Build the button render array using the theme hook.
+            $button = [
+                '#theme' => 'glossary_modal_link_button',
+                '#entity' => $entity,
+                '#attributes' => $attributes,
+                '#button_display_text' => $button_display_text,
+                '#url' => $entity->toUrl()->toString(),
+            ];
+
+            $rendered_node = \Drupal::service('renderer')->renderRoot($button);
 
             // Create a new DOMDocument to parse the rendered node string.
             $temp_doc = Html::load((string) $rendered_node);

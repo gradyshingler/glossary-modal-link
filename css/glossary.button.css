@@ -10,12 +10,14 @@
   text-decoration: none;
   cursor: pointer;
   transition: background 0.15s, color 0.15s;
+  user-select: text;
 }
 .glossary-btn i,
 .btn.glossary-modal-link i {
   font-size: 0.8em;
   margin-left: 0.2em;
   vertical-align: middle;
+  user-select: none;
   paddle-bottom: 3px;
 }
 .glossary-btn:hover, .glossary-btn:focus,
@@ -24,4 +26,3 @@
   color: #0056b3;
   text-decoration: none;
 }
-

@@ -1,18 +1,30 @@
-Glossary Modal Link
+# Glossary Modal Link
 
-Main Features:
+## Main Features:
 - Glossary Plugin can be added to Text Filters
 
-Requirements:
+## Requirements:
 - Linkit Module
 - Create a Matcher that is used.
   * currently requires a glossary_profile machine name
 
-CKEditor Plugin:
+## Setup Instructions:
+- Install the glossary_modal_link module via composer with: 
+```composer require gradyshingler/glossary_modal_link:dev-main -W``` for local debugging or ```composer require gradyshingler/glossary_modal_link``` for production.
+- Enable the module in the admin/modules page.
+- Add the glossary_modal_link module to the Text Filter in the Text Editor.
+- Create a linkit profile "glossary_profile".
+- Create a matcher that conforms to your requirements. (Only Nodes and Terms are currently supported and tested.)
+### Metadata should be something like: `([node:content-type:name])` or `[term:name]`
+- On the desired text format, drag the glossary button (G) to the toolbar
+- Enable the "Glossary links open in modal" Filter
+- Set the required variables in the filter settings.
+
+## CKEditor Plugin:
 - CKEditor Plugin is available in /js/ckeditor5_plugins folder.
 - Changes to this file needs to be built using [TODO]
 
- Development Notes:
+ ## Development Notes:
  - The CKEditor plugin's main use is to create an easy way to add a title and entity pointer to the content in the matcher. (Currently only nodes supported)
  - The Filter in the Text Editor is used to convert the <span> created by the CKeditor plugin and convert it into a boostrap based link
     * The filter has multiple fields available to customize the output and configure as needed.
@@ -20,13 +32,17 @@ CKEditor Plugin:
  - The desired modal content is injected into the bootstrap modal using js from an ajax get request and attached to the button onclick event. The route is: /glossary/modal/{entity_type}/{entity}/{view_mode}
     * This page can be accessed individually to see what content is shown.
 
+### Local Module Development and debugging
+```.json
 Add the following to composer to look at the public git repo:
 {
     "name": "glossary-modal-link",
     "type": "vcs",
     "url": "https://github.com/gradyshingler/glossary-modal-link.git"
 },
+```
 
+```.json
 Add the following to composer to look at the private git repo:
 {
     "type": "path",
@@ -35,3 +51,5 @@ Add the following to composer to look at the private git repo:
         "symlink": true
     }
 },
+```
+
