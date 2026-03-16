@@ -69,25 +69,25 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
             '#default_value' => $this->settings['bootstrap_version'] ?? '5',
             '#description' => $this->t('Select the Bootstrap version used by your theme for modal attributes. Bootstrap 5 will add bs to the data attributes.'),
         ];
-//        $form['icon_enabled'] = [
-//            '#type' => 'checkbox',
-//            '#title' => $this->t('Enable Font Awesome icon'),
-//            '#default_value' => $this->settings['icon_enabled'],
-//            '#description' => $this->t('(Deprecated) Show a Font Awesome icon after the glossary link.'),
-//        ];
-//        $form['icon_class'] = [
-//            '#type' => 'textfield',
-//            '#title' => $this->t('Font Awesome icon class'),
-//            '#default_value' => $this->settings['icon_class'] ?? 'fas fa-external-link-alt',
-//            '#description' => $this->t('(Deprecated) Enter the Font Awesome icon class to use for glossary modal links (e.g., <code>fas fa-external-link-alt</code>).'),
-//            '#required' => TRUE,
-//        ];
-//        $form['additional_classes'] = [
-//            '#type' => 'textfield',
-//            '#title' => $this->t('Additional classes'),
-//            '#default_value' => $this->settings['additional_classes'] ?? '',
-//            '#description' => $this->t('Enter any additional classes to add to the link, separated by spaces.'),
-//        ];
+        $form['icon_enabled'] = [
+            '#type' => 'checkbox',
+            '#title' => $this->t('Enable Font Awesome icon'),
+            '#default_value' => $this->settings['icon_enabled'] ?? TRUE,
+            '#description' => $this->t('Show a Font Awesome icon after the glossary link.'),
+        ];
+        $form['icon_class'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Font Awesome icon class'),
+            '#default_value' => $this->settings['icon_class'] ?? 'fas fa-external-link-alt',
+            '#description' => $this->t('Enter the Font Awesome icon class to use for glossary modal links (e.g., <code>fas fa-external-link-alt</code>). <em>Note: The icon will only appear when rendered on the front end, not in the CKEditor</em>'),
+            '#required' => TRUE,
+        ];
+        $form['additional_classes'] = [
+            '#type' => 'textfield',
+            '#title' => $this->t('Additional classes'),
+            '#default_value' => $this->settings['additional_classes'] ?? '',
+            '#description' => $this->t('Enter any additional classes to add to the link, separated by spaces.'),
+        ];
         $form['modal_view_mode'] = [
             '#type' => 'textfield',
             '#title' => $this->t('Modal View mode'),
@@ -107,14 +107,14 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
         $summary = [];
         $bootstrap_version = $this->settings['bootstrap_version'] ?? '5';
         $summary[] = $this->t('Bootstrap version: @version', ['@version' => $bootstrap_version]);
-//        $icon_enabled = !empty($this->settings['icon_enabled']);
-//        $icon_class = $this->settings['icon_class'] ?? 'fas fa-external-link-alt';
-//        $additional_classes = $this->settings['additional_classes'] ?? '';
+        $icon_enabled = !empty($this->settings['icon_enabled']);
+        $icon_class = $this->settings['icon_class'] ?? 'fas fa-external-link-alt';
+        $additional_classes = $this->settings['additional_classes'] ?? '';
         $modal_view_mode = $this->settings['modal_view_mode'] ?? 'glossary_modal';
         $button_view_mode = $this->settings['button_view_mode'] ?? 'inline_reference_link';
-//        $summary[] = $this->t('Font Awesome icon: @enabled', ['@enabled' => $icon_enabled ? 'Enabled' : 'Disabled']);
-//        $summary[] = $this->t('Font Awesome icon class: <code>@icon</code>', ['@icon' => $icon_class]);
-//        $summary[] = $this->t('Additional classes: <code>@classes</code>', ['@classes' => $additional_classes]);
+        $summary[] = $this->t('Font Awesome icon: @enabled', ['@enabled' => $icon_enabled ? 'Enabled' : 'Disabled']);
+        $summary[] = $this->t('Font Awesome icon class: <code>@icon</code>', ['@icon' => $icon_class]);
+        $summary[] = $this->t('Additional classes: <code>@classes</code>', ['@classes' => $additional_classes]);
         $summary[] = $this->t('View mode: @view_mode', ['@view_mode' => $modal_view_mode]);
         return $summary;
     }
@@ -153,6 +153,9 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
             // Get button view mode from settings, fallback to 'inline_reference_link'.
             $button_view_mode = $this->settings['button_view_mode'] ?? 'inline_reference_link';
             $modal_view_mode = $this->settings['modal_view_mode'] ?? 'inline_reference_link';
+            $icon_enabled = !empty($this->settings['icon_enabled']);
+            $icon_class = $this->settings['icon_class'] ?? 'fas fa-external-link-alt';
+            $additional_classes = $this->settings['additional_classes'] ?? '';
 
             // Create <a> element to replace <span>.
             $view_builder = \Drupal::entityTypeManager()->getViewBuilder($entity_type);
@@ -160,11 +163,10 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
             if (!empty($button_display_text)) {
                 $content['#button_display_text'] = $button_display_text;
             }
-            $rendered_node = \Drupal::service('renderer')->renderRoot($content);
 
             // Build attributes for the button.
             $attributes = [
-                'class' => ['glossary-modal-link', 'btn', 'btn-light', 'btn-sm', 'py-0', 'mx-0'],
+                'class' => array_merge(['glossary-modal-link', 'btn', 'btn-light', 'btn-sm', 'py-0', 'mx-0'], $additional_classes ? explode(' ', $additional_classes) : []),
                 'data-bs-target' => '#glossaryModal',
                 'data-bs-toggle' => 'modal',
                 'data-ajax-url' => $this->urlGenerator->generateFromRoute('glossary_modal_link.entity_modal', [
@@ -188,6 +190,8 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
                 '#attributes' => $attributes,
                 '#button_display_text' => $button_display_text,
                 '#url' => $entity->toUrl()->toString(),
+                '#icon_enabled' => $icon_enabled,
+                '#icon_class' => $icon_class,
             ];
 
             $rendered_node = \Drupal::service('renderer')->renderRoot($button);

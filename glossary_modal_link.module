@@ -42,6 +42,8 @@ function glossary_modal_link_theme($existing, $type, $theme, $path): array {
         'attributes' => [],
         'button_display_text' => '',
         'url' => NULL,
+        'icon_enabled' => FALSE,
+        'icon_class' => '',
       ],
       'template' => 'glossary-modal-link-button',
       'path' => $path . '/templates',

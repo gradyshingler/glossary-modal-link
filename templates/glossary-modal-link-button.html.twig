@@ -1,5 +1,5 @@
 {# Default template for glossary modal link button #}
 {{ attach_library('glossary_modal_link/glossary.button') }}
 <a{{ attributes }} href="{{ url }}">
-  {{ button_display_text }} <i class="fas fa-level-up"></i>
+  {{ button_display_text }} {% if icon_enabled %}<i class="{{ icon_class }}"></i>{% endif %}
 </a>
