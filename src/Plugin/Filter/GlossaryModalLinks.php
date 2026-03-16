@@ -167,6 +167,7 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
             // Build attributes for the button.
             $attributes = [
                 'class' => array_merge(['glossary-modal-link', 'btn', 'btn-light', 'btn-sm', 'py-0', 'mx-0'], $additional_classes ? explode(' ', $additional_classes) : []),
+                // Utility Data
                 'data-bs-target' => '#glossaryModal',
                 'data-bs-toggle' => 'modal',
                 'data-ajax-url' => $this->urlGenerator->generateFromRoute('glossary_modal_link.entity_modal', [
@@ -175,12 +176,14 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
                     'view_mode' => $modal_view_mode,
                 ]),
                 'data-node-view' => 'modal',
-                'data-modal-size' => 'xl',
+                // Content Data
                 'data-modal-title' => $entity->label(),
-                'data-button-label' => $button_display_text,
-                'data-disabled-status' => 'false',
-                'data-button-link' => $entity->toUrl()->toString(),
                 'data-node-id' => $entity->id(),
+                'data-modal-size' => 'xl',
+                // Button Label
+                'data-button-label' => "View Glossary",//$button_display_text,
+                'data-button-link' => "/glossary#glossary-id-{$entity->id()}",//$entity->toUrl()->toString(),
+                'data-disabled-status' => 'false',
             ];
 
             // Build the button render array using the theme hook.
