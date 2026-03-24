@@ -12,7 +12,7 @@
   align-items: center;
   font-size: 0.9rem;
   gap: 2px;
-  padding: 3px 4px !important;
+  padding: 3px 4px;
 }
 .glossary-btn i,
 .btn.glossary-modal-link i {
