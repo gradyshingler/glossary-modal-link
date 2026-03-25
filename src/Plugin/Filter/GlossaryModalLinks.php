@@ -168,8 +168,6 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
             $attributes = [
                 'class' => array_merge(['glossary-modal-link', 'btn', 'btn-light', 'btn-sm', 'py-0', 'mx-0'], $additional_classes ? explode(' ', $additional_classes) : []),
                 // Utility Data
-                'data-bs-target' => '#glossaryModal',
-                'data-bs-toggle' => 'modal',
                 'data-ajax-url' => $this->urlGenerator->generateFromRoute('glossary_modal_link.entity_modal', [
                     'entity_type' => $entity_type,
                     'entity' => $entity->id(),
@@ -185,6 +183,14 @@ final class GlossaryModalLinks extends FilterBase implements ContainerFactoryPlu
                 'data-button-link' => "/glossary#glossary-id-{$entity->id()}",//$entity->toUrl()->toString(),
                 'data-disabled-status' => 'false',
             ];
+
+            if($this->settings['bootstrap_version'] == 5) {
+                $attributes['data-bs-target'] = '#glossaryModal';
+                $attributes['data-bs-toggle'] = 'modal';
+            } else {
+                $attributes['data-target'] = '#glossaryModal';
+                $attributes['data-toggle'] = 'modal';
+            }
 
             // Build the button render array using the theme hook.
             $button = [
