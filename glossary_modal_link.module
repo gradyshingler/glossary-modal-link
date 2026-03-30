@@ -88,31 +88,20 @@ function glossary_modal_link_editor_js_settings_alter(array &$settings) {
   }
 }
 
-/**
- * Preprocess for glossary_modal_link_button theme hook.
- */
-function template_preprocess_glossary_modal_link_button(&$variables) {
-  $entity = $variables['entity'];
-  $suggestions = [];
-  if ($entity) {
-    $entity_type = $entity->getEntityTypeId();
-    $suggestions[] = 'glossary_modal_link_button__' . $entity_type;
-    if ($entity_type === 'node') {
-      $suggestions[] = 'glossary_modal_link_button__node__' . $entity->bundle();
+function glossary_modal_link_theme_suggestions_glossary_modal_link_button_alter(array &$suggestions, array $variables) {
+    $entity = $variables['entity'] ?? NULL;
+    if ($entity) {
+        $entity_type = $entity->getEntityTypeId();
+        $suggestions[] = 'glossary_modal_link_button__' . $entity_type;
+        $suggestions[] = 'glossary_modal_link_button__'.$entity_type.'__' . $entity->bundle();
     }
-    if ($entity_type === 'taxonomy_term') {
-      $suggestions[] = 'glossary_modal_link_button__taxonomy_term__' . $entity->bundle();
-    }
-  }
-  $variables['theme_hook_suggestions'] = $suggestions;
-  // Attach glossary library.
-  $variables['#attached']['library'][] = 'glossary_modal_link/glossary.glossary_button';
+    return $suggestions;
 }
 
 /**
  * Preprocess for glossary_modal_block theme hook.
  */
-function template_preprocess_glossary_modal_block(&$variables) {
+function glossary_modal_link_preprocess_glossary_modal_block(&$variables) {
   // Attach glossary library.
   $variables['#attached']['library'][] = 'glossary_modal_link/glossary.glossary_button';
 }

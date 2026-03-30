@@ -1,3 +1,33 @@
+{#//
+The default attributes for the button are as follows and created in the process filter function.
+
+Defaults
+$attributes = [
+'class' => array_merge(['glossary-modal-link', 'btn', 'btn-light', 'btn-sm', 'py-0', 'mx-0'], $additional_classes ? explode(' ', $additional_classes) : []),
+// Utility Data
+'data-ajax-url' => $this->urlGenerator->generateFromRoute('glossary_modal_link.entity_modal', [
+'entity_type' => $entity_type,
+'entity' => $entity->id(),
+// Set by filter configuation
+'view_mode' => $modal_view_mode,
+'data-node-view' => 'modal',
+// Content Data
+'data-modal-title' => $entity->label(),
+'data-node-id' => $entity->id(),
+'data-modal-size' => 'xl',
+// Button Label
+'data-button-label' => "View Glossary",//$button_display_text,
+'data-button-link' => "/glossary#glossary-id-{$entity->id()}",//$entity->toUrl()->toString(),
+'data-disabled-status' => 'false',
+];
+
+  We recommend to only change here the defaults found in the class, content data, or the button label sections. The other attributes are used to control the behavior of the modal and button and may cause unintended consequences if changed.
+
+  You can change the defaults here by using the following method:
+  {% set attributes = attributes.setAttribute('data-button-label', 'Button Display Label') %}
+  {% set attributes = attributes.setAttribute('data-disabled-status', 'true') %}
+
+#}
 {# Default template for glossary modal link button #}
 {{ attach_library('glossary_modal_link/glossary.button') }}
 <a{{ attributes }} href="{{ url }}">
